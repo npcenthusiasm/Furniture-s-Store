@@ -29,6 +29,7 @@
         </tr>
       </tbody>
     </table>
+    <pagination :page="pagination" @switch="getProducts"></pagination>
     <!-- add/edit modal -->
     <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -153,12 +154,17 @@
 
 <script>
 import $ from 'jquery';
+import pagination from '../Pagination';
 
 export default {
+  components: {
+    pagination,
+  },
   data() {
     return {
       products: [],
       tempProduct: {},
+      pagination: {},
       isNew: false,
       isLoading: false,
       status: {
@@ -167,8 +173,8 @@ export default {
     };
   },
   methods: {
-    getProducts() {
-      const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/admin/products`;
+    getProducts(page = 1) {
+      const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/admin/products?page=${page}`;
       const vm = this;
       vm.isLoading = true;
       this.$http.get(api).then((response) => {
@@ -176,6 +182,7 @@ export default {
         if (response.data.success) {
           console.log('取得完畢');
           vm.products = response.data.products;
+          vm.pagination = response.data.pagination;
           vm.isLoading = false;
         }
       });
@@ -257,8 +264,9 @@ export default {
           // vm.tempProduct.imageUrl = response.data.imageUrl;
           // console.log(vm.tempProduct);
           vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl);
+        } else {
+          this.$bus.$emit('message:push', response.data.message, 'danger');
         }
-        console.log(response);
       });
     },
   },
