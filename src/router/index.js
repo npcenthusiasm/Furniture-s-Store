@@ -3,8 +3,10 @@ import Router from 'vue-router';
 // import HelloWorld from '@/components/HelloWorld';
 import Dashboard from '@/components/Dashboard';
 // pages
+import Home from '@/components/pages/Home';
 import Login from '@/components/pages/Login';
 import Products from '@/components/pages/Products';
+// client
 
 Vue.use(Router);
 
@@ -13,6 +15,11 @@ export default new Router({
     {
       path: '*',
       redirect: '/login',
+    },
+    {
+      path: '/',
+      name: 'Home',
+      component: Home,
     },
     // {
     //   path: '/',
