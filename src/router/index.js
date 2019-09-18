@@ -7,6 +7,7 @@ import Home from '@/components/pages/Home';
 import Login from '@/components/pages/Login';
 import Products from '@/components/pages/Products';
 // client
+import clientProducts from '@/components/client/Products';
 
 Vue.use(Router);
 
@@ -21,12 +22,11 @@ export default new Router({
       name: 'Home',
       component: Home,
     },
-    // {
-    //   path: '/',
-    //   name: 'HelloWorld',
-    //   component: HelloWorld,
-    //   meta: { requiresAuth: true },
-    // },
+    {
+      path: '/products',
+      name: 'Products',
+      component: clientProducts,
+    },
     {
       path: '/login',
       name: 'Login',
