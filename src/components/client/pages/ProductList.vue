@@ -13,22 +13,17 @@
         <div class="col-md-3  ">
           <ul class="list-group sticky-top" style="top:10px">
             <li class="list-group-item list-group-item-action"
-             v-for="item in categories" :key="item.title"
-             @click.prevent="filterCategory">
-              <i class="fab fa-apple"></i> {{item.title}}
+            :class="{'active': item.category === currentCategory}"
+             v-for="item in categories" :key="item.category"
+             @click.prevent="getCategory(item.category)">
+              <i :class="item.icon"></i> {{item.category}}
             </li>
-            <!-- <li class="list-group-item list-group-item-action">
-              <i class="fab fa-apple"></i> 各式桌椅</li>
-            <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 寢具</li>
-            <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 沙發</li>
-            <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 燈具</li>
-             -->
           </ul>
         </div>
         <div class="col-md-9">
           <div class="row">
             <!-- 2 -->
-            <div class="col-md-4  mb-3" v-for="item in products" :key="item.id">
+            <div class="col-md-4  mb-3" v-for="item in filterCategory" :key="item.id">
               <div class="card box-shadow h-100">
                 <a href="#" class="card-bg-cover"
                 :style="{backgroundImage: `url(${item.imageUrl})`}"></a>
@@ -74,12 +69,13 @@ export default {
       status: {
         fileUploading: false,
       },
+      currentCategory: '全部商品',
       categories: [
-        { title: '全部商品' },
-        { title: '各式桌椅' },
-        { title: '寢具' },
-        { title: '沙發' },
-        { title: '燈具' },
+        { category: '全部商品', icon: 'fas fa-align-justify' },
+        { category: '各式桌椅', icon: 'fas fa-chair' },
+        { category: '寢具', icon: 'fas fa-bed' },
+        { category: '沙發', icon: 'fas fa-couch' },
+        { category: '燈具', icon: 'fas fa-lightbulb' },
       ],
     };
   },
@@ -98,9 +94,19 @@ export default {
         }
       });
     },
-    // computed: {
-
-    // },
+    getCategory(selected) {
+      const vm = this;
+      vm.currentCategory = selected;
+    },
+  },
+  computed: {
+    filterCategory() {
+      const vm = this;
+      if (vm.currentCategory !== '全部商品') {
+        return vm.products.filter(item => item.category === vm.currentCategory);
+      }
+      return vm.products;
+    },
   },
   created() {
     this.getProducts();
