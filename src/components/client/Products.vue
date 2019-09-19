@@ -1,8 +1,9 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <Navbar />
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container mb-4">
+    <div class="jumbotron jumbotron-fluid jumbotron-bg-cover d-flex" style="background-image:url(https://images.unsplash.com/photo-1558882224-dda166733046?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80)">
+      <div class="container border border-white" >
         <h1 class="display-4">Fluid jumbotron</h1>
         <p class="lead">This is a modified jumbotron that occupie
           the entire horizontal space of its parent.</p>
@@ -10,35 +11,48 @@
     </div>
     <div class="container mb-4">
       <div class="row mb-4">
-        <div class="col-md-3">
-          <ul class="list-group">
+        <div class="col-md-3  ">
+          <ul class="list-group sticky-top" style="top:10px">
             <li class="list-group-item list-group-item-action active">
                <i class="fab fa-apple"></i> 全部商品</li>
-            <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 桌子</li>
-            <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 椅子</li>
+            <li class="list-group-item list-group-item-action">
+              <i class="fab fa-apple"></i> 各式桌椅</li>
+            <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 寢具</li>
             <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 沙發</li>
-            <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 燈</li>
+            <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 燈具</li>
           </ul>
         </div>
         <div class="col-md-9">
           <div class="row">
-            <div class="col-md-4">
-              <div class="card">
-                <img src="../../assets/images/carousel.jpg" class="card-img-top" alt="...">
-                <div class="card-body" >
-                  <p class="card-text">用您喜愛的風化皮革的質樸外觀大幅改變您的生活空間 - 只需花費一小部分成本。
-                    這就是Larkinhurst仿皮沙發床的美麗。採用樸實的西南風色，寬大的背部和座椅支撐以及巨大的窗玻璃縫線，
-                    令您感到舒適和高品質。經典的元素，如捲起的手臂和轉動的腳，帶來足夠的傳統觸感，而輕鬆滑動的拉出式大床墊為現代化的便利性。</p>
+            <!-- 2 -->
+            <div class="col-md-4  mb-3" v-for="item in products" :key="item.id">
+              <div class="card box-shadow h-100">
+                <a href="#" class="card-bg-cover"
+                :style="{backgroundImage: `url(${item.imageUrl})`}"></a>
+                <div class="card-body">
+                  <h5 class="card-title">{{item.title}}</h5>
+                  <h5 class="badge badge-warning">{{item.category}}</h5>
+                  <p class="card-text">{{item.description}}</p>
                 </div>
-                <div class="card-footer">
-                 <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="card-footer d-flex align-items-center border-top-0 bg-white">
+                  <div class="mr-auto">
+                    <del class="font-weight-bold">{{item.origin_price | currency}}</del>
+                    <div class="text-success font-weight-bold h5">{{item.price | currency}}</div>
+                  </div>
+                  <div>
+                    <a href="#" class="btn btn-outline-primary rounded-circle">
+                      <i class="fa fa-shopping-cart"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
+            <!--  -->
           </div>
         </div>
       </div>
-      <Pagination />
+      <pagination :page="pagination" @switch="getProducts"></pagination>
+
     </div>
   </div>
 </template>
@@ -52,6 +66,54 @@ export default {
     Navbar,
     Pagination,
   },
+  data() {
+    return {
+      products: [],
+      pagination: {},
+      isLoading: false,
+      status: {
+        fileUploading: false,
+      },
+    };
+  },
+  methods: {
+    getProducts(page = 1) {
+      const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
+      const vm = this;
+      vm.isLoading = true;
+      this.$http.get(api).then((response) => {
+        console.log(response.data);
+        if (response.data.success) {
+          console.log('取得完畢');
+          vm.products = response.data.products;
+          vm.pagination = response.data.pagination;
+          vm.isLoading = false;
+        }
+      });
+    },
+  },
+  created() {
+    this.getProducts();
+  },
 };
 
 </script>
+
+<style lang="">
+  .card-bg-cover {
+    background-size: cover;
+    background-position: center center;
+    height: 200px;
+  }
+  .jumbotron-bg-cover {
+    background-size: cover;
+    background-position: center center;
+    height: 400px;
+  }
+  .box-shadow {
+    box-shadow: 0 3px 5px  rgba(0, 0, 0, .16);
+  }
+  .box-shadow:hover {
+    box-shadow: 0 3px 5px  rgba(0, 0, 0, .4);
+  }
+</style>

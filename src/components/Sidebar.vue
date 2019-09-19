@@ -17,10 +17,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="shopping-cart"></span>
-              Products
-            </a>
+            <router-link to="/products" class="nav-link">Products</router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">

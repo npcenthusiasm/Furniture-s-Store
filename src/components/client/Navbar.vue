@@ -37,16 +37,16 @@
     </div>
       <ul class="list-inline ml-auto  ">
         <li class="list-inline-item">
-          <a class="text-primary" href="#">
-            <i class="fab fa-instagram fa-2x"></i></a>
+          <a class="btn btn-outline-primary rounded-circle" href="#">
+            <i class="fab fa-instagram"></i></a>
         </li>
         <li class="list-inline-item">
-          <a class="text-primary" href="#">
-            <i class="fab fa-facebook fa-2x"></i></a>
+          <a class="btn btn-outline-primary rounded-circle" href="#">
+            <i class="fab fa-facebook"></i></a>
         </li>
         <li class="list-inline-item">
-          <a class="text-primary" href="#">
-            <i class="fa fa-shopping-cart fa-2x"></i></a>
+          <a class="btn btn-outline-primary rounded-circle" href="#">
+            <i class="fa fa-shopping-cart"></i></a>
         </li>
       </ul>
   </nav>

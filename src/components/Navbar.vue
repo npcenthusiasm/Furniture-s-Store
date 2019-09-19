@@ -16,3 +16,21 @@
     </nav>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'Navbar',
+  methods: {
+    signout() {
+      const api = `${process.env.API_PATH}/logout`;
+      const vm = this;
+      this.$http.post(api).then((response) => {
+        console.log(response.data);
+        if (response.data.success) {
+          vm.$router.push('/login');
+        }
+      });
+    },
+  },
+};
+</script>
