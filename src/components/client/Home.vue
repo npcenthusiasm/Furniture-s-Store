@@ -1,9 +1,6 @@
 <template>
   <div>
     <div class="container mb-4">
-      <Navbar />
-    </div>
-    <div class="container mb-4">
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active bg-cover" style="background-image: url(https://images.unsplash.com/photo-1541123603104-512919d6a96c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)">
@@ -79,38 +76,13 @@
         </div>
       </div>
     </div>
-    <footer class="bg-dark py-5 text-white text-center">
-      <div class="container">
-      <ul class="list-inline">
-        <li class="list-inline-item">© Copright 2017 SHOP</li>
-        <li class="list-inline-item">
-          <a href="#" class="text-white"><i class="fab fa-instagram fa-2x"></i></a>
-        </li>
-        <li class="list-inline-item"><a href="#" class="text-white">
-          <i class="fab fa-instagram fa-2x"></i></a>
-        </li>
-        <li class="list-inline-item">
-          <a href="#" class="text-white"><i class="fab fa-instagram fa-2x"></i></a>
-        </li>
-      </ul>
-    </div>
-    </footer>
   </div>
 </template>
-<script>
-import Navbar from '../client/Navbar';
 
-export default {
-  components: {
-    Navbar,
-  },
-};
-</script>
 <style lang="">
   .bg-cover {
     height: 500px;
     background-position: center center ;
     background-size: cover;
   }
-
 </style>

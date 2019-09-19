@@ -12,7 +12,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <router-link to="/products" class="nav-link">類別<span class="sr-only">(current)</span>
+          <router-link to="/productList" class="nav-link">類別<span class="sr-only">(current)</span>
           </router-link>
         </li>
         <li class ="nav-item">
@@ -46,7 +46,7 @@
         </li>
         <li class="list-inline-item">
           <a class="btn btn-outline-primary rounded-circle" href="#">
-            <i class="fa fa-shopping-cart"></i></a>
+            <i class="fa fa-shopping-bag"></i></a>
         </li>
       </ul>
   </nav>

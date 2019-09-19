@@ -1,13 +1,15 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 // import HelloWorld from '@/components/HelloWorld';
-import Dashboard from '@/components/Dashboard';
 // pages
-import Home from '@/components/pages/Home';
-import Login from '@/components/pages/Login';
-import Products from '@/components/pages/Products';
+import Login from '@/components/Login';
+// admin
+import Dashboard from '@/components/admin/Dashboard';
+import Products from '@/components/admin/pages/Products';
 // client
-import clientProducts from '@/components/client/Products';
+import Layout from '@/components/client/Layout';
+import Home from '@/components/client/Home';
+import ProductList from '@/components/client/pages/ProductList';
 
 Vue.use(Router);
 
@@ -19,13 +21,20 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'Home',
-      component: Home,
-    },
-    {
-      path: '/products',
-      name: 'Products',
-      component: clientProducts,
+      name: 'Layout',
+      component: Layout,
+      children: [
+        {
+          path: '/',
+          name: 'Home',
+          component: Home,
+        },
+        {
+          path: '/productList',
+          name: 'ProductList',
+          component: ProductList,
+        },
+      ],
     },
     {
       path: '/login',

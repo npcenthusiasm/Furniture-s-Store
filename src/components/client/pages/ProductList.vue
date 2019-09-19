@@ -1,7 +1,6 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
-    <Navbar />
     <div class="jumbotron jumbotron-fluid jumbotron-bg-cover d-flex" style="background-image:url(https://images.unsplash.com/photo-1558882224-dda166733046?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80)">
       <div class="container border border-white" >
         <h1 class="display-4">Fluid jumbotron</h1>
@@ -13,13 +12,17 @@
       <div class="row mb-4">
         <div class="col-md-3  ">
           <ul class="list-group sticky-top" style="top:10px">
-            <li class="list-group-item list-group-item-action active">
-               <i class="fab fa-apple"></i> 全部商品</li>
-            <li class="list-group-item list-group-item-action">
+            <li class="list-group-item list-group-item-action"
+             v-for="item in categories" :key="item.title"
+             @click.prevent="filterCategory">
+              <i class="fab fa-apple"></i> {{item.title}}
+            </li>
+            <!-- <li class="list-group-item list-group-item-action">
               <i class="fab fa-apple"></i> 各式桌椅</li>
             <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 寢具</li>
             <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 沙發</li>
             <li class="list-group-item list-group-item-action"><i class="fab fa-apple"></i> 燈具</li>
+             -->
           </ul>
         </div>
         <div class="col-md-9">
@@ -41,7 +44,7 @@
                   </div>
                   <div>
                     <a href="#" class="btn btn-outline-primary rounded-circle">
-                      <i class="fa fa-shopping-cart"></i>
+                      <i class="fa fa-shopping-bag"></i>
                     </a>
                   </div>
                 </div>
@@ -52,18 +55,15 @@
         </div>
       </div>
       <pagination :page="pagination" @switch="getProducts"></pagination>
-
     </div>
   </div>
 </template>
 
 <script>
-import Navbar from '../client/Navbar';
-import Pagination from '../Pagination';
+import Pagination from '../../Pagination';
 
 export default {
   components: {
-    Navbar,
     Pagination,
   },
   data() {
@@ -74,6 +74,13 @@ export default {
       status: {
         fileUploading: false,
       },
+      categories: [
+        { title: '全部商品' },
+        { title: '各式桌椅' },
+        { title: '寢具' },
+        { title: '沙發' },
+        { title: '燈具' },
+      ],
     };
   },
   methods: {
@@ -91,6 +98,9 @@ export default {
         }
       });
     },
+    // computed: {
+
+    // },
   },
   created() {
     this.getProducts();
