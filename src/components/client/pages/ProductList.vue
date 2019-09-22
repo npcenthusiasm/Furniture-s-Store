@@ -25,8 +25,10 @@
             <!-- 2 -->
             <div class="col-md-4  mb-3" v-for="item in filterCategory" :key="item.id">
               <div class="card box-shadow h-100">
-                <a href="#" class="card-bg-cover"
-                :style="{backgroundImage: `url(${item.imageUrl})`}"></a>
+                <router-link :to="`/productList/${item.id}`"
+                 class="card-bg-cover"
+                :style="{backgroundImage: `url(${item.imageUrl})`}">
+                </router-link>
                 <div class="card-body">
                   <h5 class="card-title">{{item.title}}</h5>
                   <h5 class="badge badge-warning">{{item.category}}</h5>
@@ -64,6 +66,7 @@ export default {
   data() {
     return {
       products: [],
+      productId: '',
       pagination: {},
       isLoading: false,
       status: {

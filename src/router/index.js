@@ -10,6 +10,8 @@ import Products from '@/components/admin/pages/Products';
 import Layout from '@/components/client/Layout';
 import Home from '@/components/client/Home';
 import ProductList from '@/components/client/pages/ProductList';
+import ProductDetail from '@/components/client/pages/ProductDetail';
+import CreateOrder from '@/components/client/pages/CreateOrder';
 
 Vue.use(Router);
 
@@ -33,6 +35,16 @@ export default new Router({
           path: '/productList',
           name: 'ProductList',
           component: ProductList,
+        },
+        {
+          path: '/productList/:productId',
+          name: 'ProductDetail',
+          component: ProductDetail,
+        },
+        {
+          path: '/createOrder',
+          name: 'CreateOrder',
+          component: CreateOrder,
         },
       ],
     },
