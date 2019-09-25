@@ -40,8 +40,12 @@
                     <div class="text-success font-weight-bold h5">{{item.price | currency}}</div>
                   </div>
                   <div>
-                    <a href="#" class="btn btn-outline-primary rounded-circle">
-                      <i class="fa fa-shopping-bag"></i>
+                    <a href="#" class="btn btn-outline-primary rounded-circle"
+                    @click.prevent="addToCart(item.id)">
+                      <i class="fa fa-shopping-bag"
+                      v-if="!addLoading  || productId !== item.id"></i>
+                      <i class="fas fa-spinner fa-spin"
+                      v-if="addLoading && productId === item.id"></i>
                     </a>
                   </div>
                 </div>
@@ -65,12 +69,13 @@ export default {
   },
   data() {
     return {
-      products: [],
-      productId: '',
-      pagination: {},
+      // products: [],
+      // productId: '',
+      // pagination: {},
       isLoading: false,
       status: {
-        fileUploading: false,
+        productId: '',
+        addLoading: false,
       },
       currentCategory: '全部商品',
       categories: [
@@ -83,23 +88,45 @@ export default {
     };
   },
   methods: {
-    getProducts(page = 1) {
-      const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then((response) => {
-        console.log(response.data);
-        if (response.data.success) {
-          console.log('取得完畢');
-          vm.products = response.data.products;
-          vm.pagination = response.data.pagination;
-          vm.isLoading = false;
-        }
-      });
+    getProducts(page = 1) { // page = 1
+      this.$store.dispatch('getProducts', page);
+      // const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
+      // const vm = this;
+      // vm.isLoading = true;
+      // this.$http.get(api).then((response) => {
+      //   console.log(response.data);
+      //   if (response.data.success) {
+      //     console.log('取得完畢');
+      //     vm.products = response.data.products;
+      //     vm.pagination = response.data.pagination;
+      //     vm.isLoading = false;
+      //   }
+      // });
     },
     getCategory(selected) {
       const vm = this;
       vm.currentCategory = selected;
+    },
+    addToCart(id, qty = 1) {
+      this.$store.dispatch('addToCart', { id, qty });
+      // // <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
+      // const vm = this;
+      // const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/cart`;
+      // vm.status.productId = id;
+      // vm.status.addLoading = true;
+      // const cart = {
+      //   product_id: id,
+      //   qty,
+      // };
+      // this.$http.post(api, { data: cart }).then((response) => {
+      //   console.log(response.data);
+      //   if (response.data.success) {
+      //     console.log('已加入購物袋');
+      //     vm.status.productId = '';
+      //     vm.status.addLoading = false;
+      //     // vm.getCart();
+      //   }
+      // });
     },
   },
   computed: {
@@ -109,6 +136,18 @@ export default {
         return vm.products.filter(item => item.category === vm.currentCategory);
       }
       return vm.products;
+    },
+    products() {
+      return this.$store.state.products;
+    },
+    pagination() {
+      return this.$store.state.pagination;
+    },
+    addLoading() {
+      return this.$store.state.isSingleLoading;
+    },
+    productId() {
+      return this.$store.state.productId;
     },
   },
   created() {

@@ -1,25 +1,7 @@
 <template>
   <div>
-    <div class="container mb-4">
-      <div class="row">
-        <div class="col-4">
-          <div class="border border-black p-3 text-center alert alert-primary">
-            1. 確認購買清單
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="border border-black p-3 text-center">
-           2. 填寫訂單資料
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="border border-black p-3 text-center">
-            3. 完成
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <BuyProgress :progess = step></BuyProgress>
+    <!-- step1 -->
     <div class="container mb-4">
       <table class="table table-sm">
         <thead class="mb-4">
@@ -62,77 +44,80 @@
             </td>
             <td class="align-middle text-right"
                 style="font-size:14px">
-              {{item.final_total}}
+              {{item.total}}
             </td>
 
             <td class="align-middle text-center">
-              <a href="#removeModal"
-                 class="text-muted">
-                <i class="fa fa-times"
-                   aria-hidden="true"></i>
+              <a href="#" class="text-muted"
+                @click.prevent="removeCart(item.id)">
+                <i class="fa fa-times"></i>
               </a>
             </td>
           </tr>
         </tbody>
       </table>
 
-
-      <!-- <div>
-
-        NT.10548
-        運費 尚未選擇
-        活動折抵 NT.0
-        折價券 NT.0
-        應付金額 NT.10548
-      </div> -->
-    </div>
-    <div class="container mb-4">
+      <div class="container mb-4">
        <div class="row">
-        <div class="col-6">
+        <div class="col-md-8">
+           <div class="alert alert-warning">
+            輸入「magic」，5折 優惠
+          </div>
           <div class="input-group mb-3">
-            <input type="text"
-                   class="form-control"
-                   placeholder="輸入優惠碼">
+            <input type="text" class="form-control" placeholder="輸入優惠碼"
+            v-model="coupon_code">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary"
-                      type="button">套用優惠券</button>
+                      @click.prevent="useCoupon">套用優惠券</button>
             </div>
           </div>
+
         </div>
-        <div class="col-6">
+        <div class="col-md-4">
           <table class="table order-table ">
             <tbody>
               <tr>
-                <td class="text-right">總金額</td>
+                <td>總金額</td>
                 <td class="text-right">{{total | currency}}</td>
               </tr>
               <tr>
-                <td class="text-right">優惠折抵</td>
+                <td>優惠折抵</td>
                 <td class="text-right">{{total - final_total | currency}}</td>
               </tr>
               <tr>
-                <td class="text-right">應付金額</td>
+                <td>應付金額</td>
                 <td class="text-right">{{final_total | currency}}</td>
               </tr>
             </tbody>
           </table>
-          <div class="d-flex">
-            <a href="#" class="btn btn-outline-primary mr-auto">繼續購物</a>
-            <a href="#" class="btn btn-outline-primary">下一步</a>
+        </div>
+        <div class="col">
+          <div class="d-flex mt-2">
+            <router-link to="/productList"
+            class="btn btn-outline-primary mr-auto">返回購物</router-link>
+            <router-link to="/orderCreate" class="btn btn-outline-primary">下一步</router-link>
           </div>
         </div>
-      </div>
+        </div>
+       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BuyProgress from '../BuyProgress';
+
 export default {
+  components: {
+    BuyProgress,
+  },
   data() {
     return {
       carts: [],
       total: 0,
       final_total: 0,
+      step: '1',
+      coupon_code: '',
     };
   },
   methods: {
@@ -140,6 +125,7 @@ export default {
       const vm = this;
       const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/cart`;
       // vm.status.addLoading = true;
+
       this.$http.get(api).then((response) => {
         console.log('取得購物袋資料中.............');
         if (response.data.success) {
@@ -148,6 +134,38 @@ export default {
           vm.carts = response.data.data.carts;
           vm.total = response.data.data.total;
           vm.final_total = response.data.data.final_total;
+        }
+      });
+    },
+    removeCart(id) {
+      const vm = this;
+      const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
+      console.log(id);
+      // vm.status.addLoading = true;
+      this.$http.delete(api).then((response) => {
+        console.log('刪除中.............');
+        if (response.data.success) {
+          // vm.status.addLoading = false;
+          console.log(response.data);
+          vm.getCart();
+        }
+      });
+    },
+    useCoupon() {
+      const vm = this;
+      const url = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/coupon`;
+      const coupon = {
+        code: vm.coupon_code,
+      };
+      console.log('套用優惠券中....');
+      this.$http.post(url, { data: coupon }).then((response) => {
+        if (response.data.success) {
+          console.log('已套用優惠券:testCode');
+          vm.getCart();
+          // vm.final_total = response.data.final_total;
+        } else {
+          console.log(response);
+          console.log('套用失敗');
         }
       });
     },

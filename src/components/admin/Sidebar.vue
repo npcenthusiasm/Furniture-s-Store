@@ -11,13 +11,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file"></span>
-              Orders
-            </a>
+            <router-link to="/admin/coupons" class="nav-link">優惠券</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/products" class="nav-link">Products</router-link>
+            <router-link to="/productList" class="nav-link">前台產品列表</router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
