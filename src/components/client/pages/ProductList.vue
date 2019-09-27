@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
+    <!-- <loading :active.sync="isLoading"></loading> -->
     <div class="jumbotron jumbotron-fluid jumbotron-bg-cover d-flex" style="background-image:url(https://images.unsplash.com/photo-1558882224-dda166733046?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80)">
       <div class="container" >
         <h1 class="display-4 text-white shadow">即使風格變化，一樣井井有條</h1>
@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Pagination from '../../Pagination';
 
 export default {
@@ -87,11 +88,11 @@ export default {
       // products: [],
       // productId: '',
       // pagination: {},
-      isLoading: false,
-      status: {
-        productId: '',
-        addLoading: false,
-      },
+      // isLoading: false,
+      // status: {
+      //   productId: '',
+      //   addLoading: false,
+      // },
       currentCategory: '全部商品',
       categories: [
         { category: '全部商品', icon: 'fas fa-align-justify' },
@@ -104,14 +105,14 @@ export default {
   },
   methods: {
     getProducts(page = 1) { // page = 1
-      this.$store.dispatch('getProducts', page);
+      this.$store.dispatch('productListModules/getProducts', page);
     },
     getCategory(selected) {
       const vm = this;
       vm.currentCategory = selected;
     },
     addToCart(id, qty = 1) {
-      this.$store.dispatch('addToCart', { id, qty });
+      this.$store.dispatch('cartsModules/addToCart', { id, qty });
     },
   },
   computed: {
@@ -122,9 +123,10 @@ export default {
       }
       return vm.products;
     },
-    products() {
-      return this.$store.state.products;
-    },
+    ...mapGetters('productListModules', ['products']),
+    // products() {
+    //   return this.$store.state.products;
+    // },
     pagination() {
       return this.$store.state.pagination;
     },

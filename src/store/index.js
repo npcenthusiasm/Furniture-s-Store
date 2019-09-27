@@ -2,17 +2,19 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 
+import productListModules from './productList';
+import cartsModules from './carts';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   strict: true, // 嚴謹模式
   state: {
     isLoading: false,
-    products: [],
     pagination: {},
-    carts: [],
-    cartsCount: 0,
-    total: 0,
+    // carts: [],
+    // cartsCount: 0,
+    // total: 0,
     isSingleLoading: false,
     productId: '',
   },
@@ -20,19 +22,6 @@ export default new Vuex.Store({
     // payload 載荷
     updateLoading(context, status) {
       context.commit('LOADING', status);
-    },
-    getProducts(context, page) {
-      const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
-      // ?page=${page}
-      context.commit('LOADING', true);
-      axios.get(api).then((response) => {
-        if (response.data.success) {
-          console.log('取得產品列表', response);
-          context.commit('PRODUCTS', response.data.products);
-          context.commit('PAINATION', response.data.pagination);
-          context.commit('LOADING', false);
-        }
-      });
     },
     getCart(context) {
       const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/cart`;
@@ -80,26 +69,38 @@ export default new Vuex.Store({
     LOADING(state, status) {
       state.isLoading = status;
     },
-    PRODUCTS(state, payload) {
-      state.products = payload;
-    },
     PAINATION(state, payload) {
       state.pagination = payload;
     },
-    CARTS(state, payload) {
-      state.carts = payload;
-    },
-    TOTAL(state, payload) {
-      state.total = payload;
-    },
+    // CARTS(state, payload) {
+    //   state.carts = payload;
+    // },
+    // TOTAL(state, payload) {
+    //   state.total = payload;
+    // },
+    // CARTSCOUNT(state, payload) {
+    //   state.cartsCount = payload;
+    // },
     SINGLELOADING(state, status) {
       state.isSingleLoading = status;
     },
     PRODUCTID(state, payload) {
       state.productId = payload;
     },
-    CARTSCOUNT(state, payload) {
-      state.cartsCount = payload;
-    },
+  },
+  getters: {
+    // pagination(state) {
+    //   return state.pagination;
+    // },
+    // addLoading(state) {
+    //   return state.addLoading;
+    // },
+    // productId(state) {
+    //   return state.productId;
+    // },
+  },
+  modules: {
+    productListModules,
+    cartsModules,
   },
 });

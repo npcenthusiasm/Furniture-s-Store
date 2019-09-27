@@ -87,6 +87,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -96,25 +98,26 @@ export default {
   },
   methods: {
     getCart() {
-      this.$store.dispatch('getCart');
+      this.$store.dispatch('cartsModules/getCart');
     },
     removeCart(id) {
-      this.$store.dispatch('removeCart', id);
+      this.$store.dispatch('cartsModules/removeCart', id);
     },
   },
   computed: {
     isLoading() {
       return this.$store.state.isLoading;
     },
-    carts() {
-      return this.$store.state.carts;
-    },
-    total() {
-      return this.$store.state.total;
-    },
-    cartsCount() {
-      return this.$store.state.cartsCount;
-    },
+    ...mapGetters('cartsModules', ['carts', 'total', 'cartsCount']),
+    // carts() {
+    //   return this.$store.state.carts;
+    // },
+    // total() {
+    //   return this.$store.state.total;
+    // },
+    // cartsCount() {
+    //   return this.$store.state.cartsCount;
+    // },
   },
   created() {
     const vm = this;
