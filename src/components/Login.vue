@@ -27,7 +27,10 @@
         </label>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+      <div class="mt-3">
+        <router-link to="/productList" class="pt-5">返回商品列表</router-link>
+      </div>
+      <p class="mt-5 mb-3 text-muted">&copy; 2019</p>
     </form>
   </div>
 </template>

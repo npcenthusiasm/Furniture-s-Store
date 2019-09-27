@@ -2,15 +2,23 @@
   <div>
     <loading :active.sync="isLoading"></loading>
     <div class="jumbotron jumbotron-fluid jumbotron-bg-cover d-flex" style="background-image:url(https://images.unsplash.com/photo-1558882224-dda166733046?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80)">
-      <div class="container border border-white" >
-        <h1 class="display-4">Fluid jumbotron</h1>
-        <p class="lead">This is a modified jumbotron that occupie
-          the entire horizontal space of its parent.</p>
+      <div class="container" >
+        <h1 class="display-4 text-white shadow">即使風格變化，一樣井井有條</h1>
+        <p class="lead"></p>
       </div>
     </div>
     <div class="container mb-4">
+      <div class="bg-white ml-0">
+        <nav aria-label="breadcrumb" style="">
+          <ol class="breadcrumb bg-white">
+            <li class="breadcrumb-item"><router-link to="/">首頁</router-link></li>
+            <li class="breadcrumb-item"><router-link to="/productList">商品列表</router-link></li>
+            <li class="breadcrumb-item active" aria-current="page">{{currentCategory}}</li>
+          </ol>
+        </nav>
+      </div>
       <div class="row mb-4">
-        <div class="col-md-3  ">
+        <div class="col-md-3 mb-4">
           <ul class="list-group sticky-top" style="top:10px">
             <li class="list-group-item list-group-item-action"
             :class="{'active': item.category === currentCategory}"
@@ -30,14 +38,21 @@
                 :style="{backgroundImage: `url(${item.imageUrl})`}">
                 </router-link>
                 <div class="card-body">
-                  <h5 class="card-title">{{item.title}}</h5>
+                  <h5 class="card-title">{{item.title}}
+                    <span v-if="item.category === '燈具'" class="text-danger h5 flicker">NEW</span>
+                  </h5>
                   <h5 class="badge badge-warning">{{item.category}}</h5>
                   <p class="card-text">{{item.description}}</p>
                 </div>
                 <div class="card-footer d-flex align-items-center border-top-0 bg-white">
                   <div class="mr-auto">
-                    <del class="font-weight-bold">{{item.origin_price | currency}}</del>
-                    <div class="text-success font-weight-bold h5">{{item.price | currency}}</div>
+                    <div class="font-weight-bold h5"
+                    v-if="!item.origin_price">{{item.price | currency}}</div>
+                    <del class="font-weight-bold"
+                    v-if="item.origin_price">{{item.origin_price | currency}}</del>
+                    <div class="text-success font-weight-bold h5"
+                    v-if="item.origin_price">{{item.price | currency}}
+                    </div>
                   </div>
                   <div>
                     <a href="#" class="btn btn-outline-primary rounded-circle"
@@ -90,18 +105,6 @@ export default {
   methods: {
     getProducts(page = 1) { // page = 1
       this.$store.dispatch('getProducts', page);
-      // const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
-      // const vm = this;
-      // vm.isLoading = true;
-      // this.$http.get(api).then((response) => {
-      //   console.log(response.data);
-      //   if (response.data.success) {
-      //     console.log('取得完畢');
-      //     vm.products = response.data.products;
-      //     vm.pagination = response.data.pagination;
-      //     vm.isLoading = false;
-      //   }
-      // });
     },
     getCategory(selected) {
       const vm = this;
@@ -109,24 +112,6 @@ export default {
     },
     addToCart(id, qty = 1) {
       this.$store.dispatch('addToCart', { id, qty });
-      // // <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
-      // const vm = this;
-      // const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/cart`;
-      // vm.status.productId = id;
-      // vm.status.addLoading = true;
-      // const cart = {
-      //   product_id: id,
-      //   qty,
-      // };
-      // this.$http.post(api, { data: cart }).then((response) => {
-      //   console.log(response.data);
-      //   if (response.data.success) {
-      //     console.log('已加入購物袋');
-      //     vm.status.productId = '';
-      //     vm.status.addLoading = false;
-      //     // vm.getCart();
-      //   }
-      // });
     },
   },
   computed: {
@@ -151,6 +136,11 @@ export default {
     },
   },
   created() {
+    if (this.$route.query.category) {
+      this.currentCategory = this.$route.query.category;
+      console.log(this.$route.query.category);
+      this.$router.push('/productList');
+    }
     this.getProducts();
   },
 };
@@ -158,10 +148,19 @@ export default {
 </script>
 
 <style lang="">
+  .list-group-item {
+    cursor: pointer;
+  }
   .card-bg-cover {
     background-size: cover;
     background-position: center center;
     height: 200px;
+  }
+  .card-bg-cover:hover {
+    background-size: cover;
+    background-position: center center;
+    height: 200px;
+    opacity: 0.8;
   }
   .jumbotron-bg-cover {
     background-size: cover;
@@ -172,6 +171,6 @@ export default {
     box-shadow: 0 3px 5px  rgba(0, 0, 0, .16);
   }
   .box-shadow:hover {
-    box-shadow: 0 3px 5px  rgba(0, 0, 0, .4);
+    box-shadow: 0 3px 5px  rgba(0, 0, 0, 0.7);
   }
 </style>

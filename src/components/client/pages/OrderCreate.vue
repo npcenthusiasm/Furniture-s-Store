@@ -122,7 +122,7 @@
                   </tr>
                   <tr>
                     <td>應付金額</td>
-                    <td class="text-right">{{final_total | currency}}</td>
+                    <td class="text-right text-success">{{final_total | currency}}</td>
                   </tr>
                 </tbody>
               </table>

@@ -1,6 +1,7 @@
 <template>
   <div>
-     <BuyProgress :progess = step></BuyProgress>
+    <BuyProgress :progess = step></BuyProgress>
+    <loading :active.sync="isLoading"></loading>
     <!-- 3. 完成-->
     <div class="container">
       <div class="my-5 row justify-content-center">
@@ -92,11 +93,19 @@ export default {
     payOrder() {
       const vm = this;
       const url = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/pay/${vm.orderId}`;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.post(url).then((response) => {
         if (response.data.success) {
+          vm.$store.dispatch('getCart');
+          vm.$store.dispatch('updateLoading', false);
           vm.getOrder();
         }
       });
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     },
   },
   created() {

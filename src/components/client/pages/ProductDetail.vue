@@ -6,21 +6,26 @@
       <div class="sticky-top bg-white ml-0">
         <nav aria-label="breadcrumb" style="">
           <ol class="breadcrumb bg-white">
-            <li class="breadcrumb-item"><a href="#">首頁</a></li>
-            <li class="breadcrumb-item"><a href="#">商品列表</a></li>
-            <li class="breadcrumb-item"><a href="#">燈具</a></li>
-            <li class="breadcrumb-item active" aria-current="page">LED 工作燈</li>
+            <li class="breadcrumb-item"><router-link to="/">首頁</router-link></li>
+            <li class="breadcrumb-item"><router-link to="/productList">商品列表</router-link></li>
+            <li class="breadcrumb-item">
+              <router-link :to="{ name:'ProductList',query: { category: product.category }}">
+                {{product.category}}
+              </router-link>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{product.title}}</li>
+            <router-link to=""></router-link>
           </ol>
         </nav>
       </div>
 
       <div class="row">
-        <div class="col-md-7 productImg">
+        <div class="col-md-7 productImg order-1 order-md-0">
           <img :src="product.imageUrl" class="img-fluid" alt="">
           <img src="https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" class="img-fluid" alt="">
           <img src="https://images.unsplash.com/photo-1548728560-29a15f46fb24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" class="img-fluid" alt="">
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 order-0  order-md-1">
           <div class="sticky-top" style="top:10px">
             <a href="#" class="badge badge-warning">{{product.category}}</a>
             <div class="my-4">
@@ -86,22 +91,6 @@ export default {
     },
     addToCart(id, qty = 1) {
       this.$store.dispatch('addToCart', { id, qty });
-      // <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
-      // const vm = this;
-      // const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/cart`;
-      // vm.status.addLoading = true;
-      // const cart = {
-      //   product_id: id,
-      //   qty,
-      // };
-      // this.$http.post(api, { data: cart }).then((response) => {
-      //   console.log(response.data);
-      //   if (response.data.success) {
-      //     console.log('已加入購物袋');
-      //     vm.status.addLoading = false;
-      //     vm.getCart();
-      //   }
-      // });
     },
     plusNum() {
       this.num += 1;

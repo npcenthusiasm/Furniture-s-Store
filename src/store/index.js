@@ -11,6 +11,7 @@ export default new Vuex.Store({
     products: [],
     pagination: {},
     carts: [],
+    cartsCount: 0,
     total: 0,
     isSingleLoading: false,
     productId: '',
@@ -39,6 +40,7 @@ export default new Vuex.Store({
       axios.get(api).then((response) => {
         if (response.data.success) {
           console.log('取得購物袋', response);
+          context.commit('CARTSCOUNT', response.data.data.carts.length);
           context.commit('CARTS', response.data.data.carts);
           context.commit('TOTAL', response.data.data.total);
           context.commit('LOADING', false);
@@ -95,6 +97,9 @@ export default new Vuex.Store({
     },
     PRODUCTID(state, payload) {
       state.productId = payload;
+    },
+    CARTSCOUNT(state, payload) {
+      state.cartsCount = payload;
     },
   },
 });

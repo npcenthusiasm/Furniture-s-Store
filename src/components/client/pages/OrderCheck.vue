@@ -1,6 +1,7 @@
 <template>
   <div>
     <BuyProgress :progess = step></BuyProgress>
+    <loading :active.sync="isLoading"></loading>
     <!-- step1 -->
     <div class="container mb-4">
       <table class="table table-sm">
@@ -86,7 +87,7 @@
               </tr>
               <tr>
                 <td>應付金額</td>
-                <td class="text-right">{{final_total | currency}}</td>
+                <td class="text-right text-success">{{final_total | currency}}</td>
               </tr>
             </tbody>
           </table>
@@ -157,17 +158,23 @@ export default {
       const coupon = {
         code: vm.coupon_code,
       };
-      console.log('套用優惠券中....');
+      vm.$store.dispatch('updateLoading', true);
       this.$http.post(url, { data: coupon }).then((response) => {
         if (response.data.success) {
-          console.log('已套用優惠券:testCode');
+          console.log('套用優惠券', response);
+          this.$bus.$emit('message:push', response.data.message, 'success');
           vm.getCart();
-          // vm.final_total = response.data.final_total;
         } else {
-          console.log(response);
-          console.log('套用失敗');
+          console.log('套用失敗', response);
+          this.$bus.$emit('message:push', response.data.message, 'danger');
         }
+        vm.$store.dispatch('updateLoading', false);
       });
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     },
   },
   created() {

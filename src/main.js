@@ -54,17 +54,17 @@ new Vue({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log('to', to, 'from', from, 'next', next);
+  // console.log('to', to, 'from', from, 'next', next);
   if (to.meta.requiresAuth) {
     console.log('驗證中...');
     const api = `${process.env.API_PATH}/api/user/check`;
     axios.post(api).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.success) {
-        console.log('驗證成功');
+        console.log('驗證成功', response);
         next();
       } else {
-        console.log('驗證失敗');
+        console.log('驗證失敗', response);
         next({
           path: '/login',
         });
