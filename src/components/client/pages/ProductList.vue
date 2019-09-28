@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <loading :active.sync="isLoading"></loading> -->
     <div class="jumbotron jumbotron-fluid jumbotron-bg-cover d-flex" style="background-image:url(https://images.unsplash.com/photo-1558882224-dda166733046?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80)">
       <div class="container" >
         <h1 class="display-4 text-white shadow">即使風格變化，一樣井井有條</h1>
@@ -58,9 +57,9 @@
                     <a href="#" class="btn btn-outline-primary rounded-circle"
                     @click.prevent="addToCart(item.id)">
                       <i class="fa fa-shopping-bag"
-                      v-if="!addLoading  || productId !== item.id"></i>
+                      v-if="!singleLoading  || productId !== item.id"></i>
                       <i class="fas fa-spinner fa-spin"
-                      v-if="addLoading && productId === item.id"></i>
+                      v-if="singleLoading && productId === item.id"></i>
                     </a>
                   </div>
                 </div>
@@ -85,14 +84,6 @@ export default {
   },
   data() {
     return {
-      // products: [],
-      // productId: '',
-      // pagination: {},
-      // isLoading: false,
-      // status: {
-      //   productId: '',
-      //   addLoading: false,
-      // },
       currentCategory: '全部商品',
       categories: [
         { category: '全部商品', icon: 'fas fa-align-justify' },
@@ -124,23 +115,12 @@ export default {
       return vm.products;
     },
     ...mapGetters('productListModules', ['products']),
-    // products() {
-    //   return this.$store.state.products;
-    // },
-    pagination() {
-      return this.$store.state.pagination;
-    },
-    addLoading() {
-      return this.$store.state.isSingleLoading;
-    },
-    productId() {
-      return this.$store.state.productId;
-    },
+    ...mapGetters('cartsModules', ['productId', 'singleLoading']),
+    ...mapGetters(['pagination']),
   },
   created() {
     if (this.$route.query.category) {
       this.currentCategory = this.$route.query.category;
-      console.log(this.$route.query.category);
       this.$router.push('/productList');
     }
     this.getProducts();
@@ -149,10 +129,15 @@ export default {
 
 </script>
 
-<style lang="">
+<style lang="" scoped>
+ .list-group .active {
+    background-color: rgba(128, 128, 128, 0.925);
+  }
   .list-group-item {
     cursor: pointer;
+    border: 0;
   }
+
   .card-bg-cover {
     background-size: cover;
     background-position: center center;

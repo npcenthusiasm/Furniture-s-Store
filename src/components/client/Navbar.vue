@@ -1,13 +1,12 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
     <div class="container mb-4 p-0">
       <nav class="navbar navbar-expand-md navbar-light">
         <router-link to="/" class="navbar-brand navbar-logo
         bg-transparent shadow-none font-weight-bold">Furniture's Store</router-link>
-      <button class="navbar-toggler" type="button" data-toggle="collapse"
-        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+          aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -87,7 +86,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   data() {
@@ -97,36 +96,21 @@ export default {
     };
   },
   methods: {
-    getCart() {
-      this.$store.dispatch('cartsModules/getCart');
-    },
+    ...mapActions('cartsModules', ['getCart']),
     removeCart(id) {
       this.$store.dispatch('cartsModules/removeCart', id);
     },
   },
   computed: {
-    isLoading() {
-      return this.$store.state.isLoading;
-    },
     ...mapGetters('cartsModules', ['carts', 'total', 'cartsCount']),
-    // carts() {
-    //   return this.$store.state.carts;
-    // },
-    // total() {
-    //   return this.$store.state.total;
-    // },
-    // cartsCount() {
-    //   return this.$store.state.cartsCount;
-    // },
   },
   created() {
-    const vm = this;
-    vm.getCart();
+    this.getCart();
   },
 };
 </script>
 
-<style lang="">
+<style lang="" scodped>
   @media (max-width: 768px) {
    .navbar-brand {
      text-align: center;
@@ -152,5 +136,22 @@ export default {
     max-height: 200px;
     overflow: auto;
   }
+  .navbar-nav .nav-link::after {
+    content: '';
+    height: 2px;
+    width: 0;
+    display: block;
+    background: #000;
+    transition: width .3s;
+  }
+  .navbar-nav .nav-link:hover::after {
+    width:100%;
+  }
+  /* .navbar-nav .nav-link:hover {
+    transform: scale(1);
+    padding-bottom: 0;
+    border-bottom: 2px solid black;
+  } */
+
 </style>
 

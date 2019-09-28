@@ -1,7 +1,6 @@
 
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
     <div class="container">
       <div class="sticky-top bg-white ml-0">
         <nav aria-label="breadcrumb" style="">
@@ -45,8 +44,8 @@
               </div>
               <a href="#" class="btn btn-outline-secondary rounded-0 w-100"
               @click.prevent="addToCart(productId, num)">
-              <span v-if="!addLoading">加入購物袋</span>
-              <i class="fas fa-spinner fa-spin" v-if="addLoading"></i></a>
+              <span v-if="!singleLoading">加入購物袋</span>
+              <i class="fas fa-spinner fa-spin" v-if="singleLoading"></i></a>
             </div>
 
             <div class="my-4">
@@ -66,12 +65,13 @@
 </style>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
       product: {},
       productId: '',
-      isLoading: false,
       num: 1,
     };
   },
@@ -79,18 +79,17 @@ export default {
     getProduct() {
       const vm = this;
       const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/product/${vm.productId}`;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.get(api).then((response) => {
-        console.log(response.data);
         if (response.data.success) {
-          console.log('取得完畢');
+          console.log('取得產品', response);
           vm.product = response.data.product;
-          vm.isLoading = false;
+          vm.$store.dispatch('updateLoading', false);
         }
       });
     },
     addToCart(id, qty = 1) {
-      this.$store.dispatch('addToCart', { id, qty });
+      this.$store.dispatch('cartsModules/addToCart', { id, qty });
     },
     plusNum() {
       this.num += 1;
@@ -101,22 +100,10 @@ export default {
     },
   },
   computed: {
-    // products() {
-    //   return this.$store.state.products;
-    // },
-    // pagination() {
-    //   return this.$store.state.pagination;
-    // },
-    addLoading() {
-      return this.$store.state.isSingleLoading;
-    },
-    // productId() {
-    //   return this.$store.state.productId;
-    // },
+    ...mapGetters('cartsModules', ['singleLoading']),
   },
   created() {
     this.productId = this.$route.params.productId;
-    console.log(this.productId);
     this.getProduct();
   },
 };

@@ -1,7 +1,6 @@
 <template>
   <div>
     <BuyProgress :progess = step></BuyProgress>
-    <loading :active.sync="isLoading"></loading>
     <!-- 3. 完成-->
     <div class="container">
       <div class="my-5 row justify-content-center">
@@ -55,6 +54,11 @@
               </tr>
             </tbody>
           </table>
+          <div v-if="order.is_paid === true">
+            <router-link to="/productList" class="h5">
+            <i class="fas fa-long-arrow-alt-left"></i>繼續逛
+            </router-link>
+          </div>
           <div class="text-right" v-if="order.is_paid === false">
             <button class="btn btn-danger">確認付款去</button>
           </div>
@@ -96,16 +100,11 @@ export default {
       vm.$store.dispatch('updateLoading', true);
       this.$http.post(url).then((response) => {
         if (response.data.success) {
-          vm.$store.dispatch('getCart');
+          vm.$store.dispatch('cartsModules/getCart');
           vm.$store.dispatch('updateLoading', false);
           vm.getOrder();
         }
       });
-    },
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.isLoading;
     },
   },
   created() {

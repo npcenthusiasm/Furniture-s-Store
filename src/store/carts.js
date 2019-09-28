@@ -7,6 +7,9 @@ export default {
     carts: [],
     cartsCount: 0,
     total: 0,
+    final_total: 0,
+    isSingleLoading: false,
+    productId: '',
   },
   actions: {
     // payload 載荷
@@ -19,6 +22,7 @@ export default {
           context.commit('CARTSCOUNT', response.data.data.carts.length);
           context.commit('CARTS', response.data.data.carts);
           context.commit('TOTAL', response.data.data.total);
+          context.commit('FINAL_TOTAL', response.data.data.final_total);
           context.commit('LOADING', false, { root: true });
         }
       });
@@ -36,8 +40,8 @@ export default {
     },
     addToCart(context, { id, qty }) {
       const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/cart`;
-      context.commit('SINGLELOADING', true, { root: true });
-      context.commit('PRODUCTID', id, { root: true });
+      context.commit('SINGLELOADING', true);
+      context.commit('PRODUCTID', id);
       const cart = {
         product_id: id,
         qty,
@@ -45,8 +49,8 @@ export default {
       axios.post(api, { data: cart }).then((response) => {
         if (response.data.success) {
           console.log('已加入購物袋', response);
-          context.commit('PRODUCTID', '', { root: true });
-          context.commit('SINGLELOADING', false, { root: true });
+          context.commit('PRODUCTID', '');
+          context.commit('SINGLELOADING', false);
           context.dispatch('getCart');
         }
       });
@@ -59,13 +63,25 @@ export default {
     TOTAL(state, payload) {
       state.total = payload;
     },
+    FINAL_TOTAL(state, payload) {
+      state.final_total = payload;
+    },
     CARTSCOUNT(state, payload) {
       state.cartsCount = payload;
+    },
+    SINGLELOADING(state, status) {
+      state.isSingleLoading = status;
+    },
+    PRODUCTID(state, payload) {
+      state.productId = payload;
     },
   },
   getters: {
     carts: state => state.carts,
     total: state => state.total,
+    final_total: state => state.final_total,
     cartsCount: state => state.cartsCount,
+    singleLoading: state => state.isSingleLoading,
+    productId: state => state.productId,
   },
 };

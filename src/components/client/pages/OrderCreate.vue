@@ -1,7 +1,6 @@
 <template>
   <div>
      <BuyProgress :progess = step></BuyProgress>
-
     <!-- 2. 填寫訂單資料 -->
     <div class="container">
       <div class="card mb-4">
@@ -143,6 +142,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import BuyProgress from '../BuyProgress';
 
 export default {
@@ -151,9 +151,6 @@ export default {
   },
   data() {
     return {
-      carts: [],
-      total: 0,
-      final_total: 0,
       step: '2',
       form: {
         user: {
@@ -170,22 +167,7 @@ export default {
     };
   },
   methods: {
-    getCart() {
-      const vm = this;
-      const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/cart`;
-      // vm.status.addLoading = true;
-
-      this.$http.get(api).then((response) => {
-        console.log('取得購物袋資料中.............');
-        if (response.data.success) {
-          // vm.status.addLoading = false;
-          console.log(response.data.data);
-          vm.carts = response.data.data.carts;
-          vm.total = response.data.data.total;
-          vm.final_total = response.data.data.final_total;
-        }
-      });
-    },
+    ...mapActions('cartsModules', ['getCart']),
     createOrder() {
       const vm = this;
       const url = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/order`;
@@ -208,6 +190,9 @@ export default {
         }
       });
     },
+  },
+  computed: {
+    ...mapGetters('cartsModules', ['carts', 'total', 'final_total']),
   },
   created() {
     this.getCart();

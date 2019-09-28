@@ -1,7 +1,6 @@
 <template>
   <div>
     <BuyProgress :progess = step></BuyProgress>
-    <loading :active.sync="isLoading"></loading>
     <!-- step1 -->
     <div class="container mb-4">
       <table class="table table-sm">
@@ -106,6 +105,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import BuyProgress from '../BuyProgress';
 
 export default {
@@ -114,43 +114,14 @@ export default {
   },
   data() {
     return {
-      carts: [],
-      total: 0,
-      final_total: 0,
       step: '1',
       coupon_code: '',
     };
   },
   methods: {
-    getCart() {
-      const vm = this;
-      const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/cart`;
-      // vm.status.addLoading = true;
-
-      this.$http.get(api).then((response) => {
-        console.log('取得購物袋資料中.............');
-        if (response.data.success) {
-          // vm.status.addLoading = false;
-          console.log(response.data.data);
-          vm.carts = response.data.data.carts;
-          vm.total = response.data.data.total;
-          vm.final_total = response.data.data.final_total;
-        }
-      });
-    },
+    ...mapActions('cartsModules', ['getCart']),
     removeCart(id) {
-      const vm = this;
-      const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      console.log(id);
-      // vm.status.addLoading = true;
-      this.$http.delete(api).then((response) => {
-        console.log('刪除中.............');
-        if (response.data.success) {
-          // vm.status.addLoading = false;
-          console.log(response.data);
-          vm.getCart();
-        }
-      });
+      this.$store.dispatch('cartsModules/removeCart', id);
     },
     useCoupon() {
       const vm = this;
@@ -173,9 +144,7 @@ export default {
     },
   },
   computed: {
-    isLoading() {
-      return this.$store.state.isLoading;
-    },
+    ...mapGetters('cartsModules', ['carts', 'total', 'final_total']),
   },
   created() {
     this.getCart();
