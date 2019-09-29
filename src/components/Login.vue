@@ -21,6 +21,7 @@
         required
         v-model="users.password"
       />
+      <span v-if="loginError" class="text-danger">登入失敗</span>
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me" /> Remember me
@@ -44,6 +45,7 @@ export default {
         username: '',
         password: '',
       },
+      loginError: false,
     };
   },
   methods: {
@@ -53,6 +55,8 @@ export default {
       this.$http.post(api, vm.users).then((response) => {
         if (response.data.success) {
           vm.$router.push('/admin/products');
+        } else {
+          vm.loginError = true;
         }
       });
     },
@@ -60,7 +64,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 html,
 body {
   height: 100%;

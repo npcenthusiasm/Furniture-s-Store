@@ -30,7 +30,6 @@ export default {
         msg.forEach((item, i) => {
           if (item.timestamp === timestamp) {
             context.commit('REMOVE_MESSAGE', i);
-            console.log(i);
             $('.message-alert').removeClass('bounceInDown');
             $('.message-alert').removeClass('bounceOutRight');
           }
@@ -43,7 +42,6 @@ export default {
       state.messages.push(msg);
     },
     REMOVE_MESSAGE(state) {
-      console.log(state.messages);
       state.messages.splice(0, 1);
     },
   },

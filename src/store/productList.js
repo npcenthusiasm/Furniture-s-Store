@@ -12,7 +12,6 @@ export default {
       context.commit('LOADING', true, { root: true });
       axios.get(api).then((response) => {
         if (response.data.success) {
-          console.log('取得產品列表', response);
           context.commit('PRODUCTS', response.data.products);
           context.commit('PAINATION', response.data.pagination, { root: true });
           context.commit('LOADING', false, { root: true });

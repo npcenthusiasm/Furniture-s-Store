@@ -19,12 +19,6 @@
             <li class="nav-item ">
               <router-link to="/admin/products" class="nav-link">管理商品</router-link>
             </li>
-            <!-- <li class="nav-item ">
-              <a href="#hot" class="nav-link">熱門商品</a>
-            </li>
-            <li class="nav-item ">
-              <a href="#new" class="nav-link">最新消息</a>
-            </li> -->
           </ul>
 
           <ul class="list-inline mb-0">
@@ -33,10 +27,6 @@
               class="btn btn-outline-primary rounded-circle">
               <i class="fas fa-user-circle"></i>
               </router-link>
-            </li>
-            <li class="list-inline-item">
-              <a class="btn btn-outline-primary rounded-circle" href="#">
-                <i class="fab fa-facebook"></i></a>
             </li>
             <li class="list-inline-item">
               <button class="btn btn-outline-primary rounded-circle btn-cart"
@@ -115,7 +105,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scodped>
+<style lang="scss" scoped>
 @media (max-width: 768px) {
   .navbar-brand {
     text-align: center;
@@ -129,7 +119,6 @@ export default {
   height: 50px;
 }
 .btn-cart {
-  background-color: transparent;
   position: relative;
   .badge {
     position: absolute;

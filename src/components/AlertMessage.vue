@@ -34,7 +34,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style lang="scss" scoped>
 .message-alert {
   position: fixed;
   max-width: 50%;
