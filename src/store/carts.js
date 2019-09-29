@@ -32,6 +32,7 @@ export default {
       context.commit('LOADING', true, { root: true });
       axios.delete(api).then((response) => {
         if (response.data.success) {
+          context.dispatch('alertMsgModules/updateMessage', { message: response.data.message, status: 'success' }, { root: true });
           console.log('刪除購物袋資料', response);
           context.dispatch('getCart');
           context.commit('LOADING', false, { root: true });
@@ -48,6 +49,8 @@ export default {
       };
       axios.post(api, { data: cart }).then((response) => {
         if (response.data.success) {
+          // this.$bus.$emit('message:push', response.data.message, 'success');
+          context.dispatch('alertMsgModules/updateMessage', { message: response.data.message, status: 'success' }, { root: true });
           console.log('已加入購物袋', response);
           context.commit('PRODUCTID', '');
           context.commit('SINGLELOADING', false);

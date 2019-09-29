@@ -110,48 +110,50 @@ export default {
 };
 </script>
 
-<style lang="" scodped>
-  @media (max-width: 768px) {
-   .navbar-brand {
-     text-align: center;
-     color: red;
-    }
+<style lang="scss" scodped>
+@media (max-width: 768px) {
+  .navbar-brand {
+    text-align: center;
+    color: red;
   }
-  .cart-img {
-    background-position: center center;
-    background-size: cover;
-    width: 50px;
-    height: 50px;
-  }
-  .btn-cart {
-    background-color: transparent;
-    position: relative;
-  }
-  .btn-cart .badge {
+}
+.cart-img {
+  background-position: center center;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+}
+.btn-cart {
+  background-color: transparent;
+  position: relative;
+  .badge {
     position: absolute;
     right: -10px;
     top: 0px;
   }
-  .cart-scroll {
-    max-height: 200px;
-    overflow: auto;
-  }
-  .navbar-nav .nav-link::after {
+}
+.cart-scroll {
+  max-height: 200px;
+  overflow: auto;
+}
+.nav-link {
+  position: relative;
+  text-decoration:none;
+  display: inline-block;
+  &::before {
     content: '';
+    position: absolute;
+    bottom:0;
+    left: 0;
     height: 2px;
     width: 0;
-    display: block;
+    display:inline-block;
     background: #000;
-    transition: width .3s;
+    transition: width .6s;
   }
-  .navbar-nav .nav-link:hover::after {
+  &:hover::before {
     width:100%;
   }
-  /* .navbar-nav .nav-link:hover {
-    transform: scale(1);
-    padding-bottom: 0;
-    border-bottom: 2px solid black;
-  } */
-
+}
 </style>
 

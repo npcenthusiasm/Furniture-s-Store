@@ -4,7 +4,7 @@
       <ul class="pagination ">
         <li class="page-item" :class="{'disabled': !page.has_pre}">
           <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
-          @click.prevent="getPage(page.current_page - 1)">Previous</a>
+          @click.prevent="getPage(page.current_page - 1)">P R E V</a>
         </li>
         <li class="page-item" v-for="item in page.total_pages" :key="item"
         :class="{'active':page.current_page === item}">
@@ -12,7 +12,7 @@
         </li>
         <li class="page-item" :class="{'disabled': !page.has_next}">
           <a class="page-link" href="#"
-          @click.prevent="getPage(page.current_page + 1)">Next</a>
+          @click.prevent="getPage(page.current_page + 1)">N E X T</a>
         </li>
       </ul>
     </nav>

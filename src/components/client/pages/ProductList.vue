@@ -30,7 +30,7 @@
         <div class="col-md-9">
           <div class="row">
             <!-- 2 -->
-            <div class="col-md-4  mb-3" v-for="item in filterCategory" :key="item.id">
+            <div class="col-md-6 col-lg-4 mb-3" v-for="item in filterCategory" :key="item.id">
               <div class="card box-shadow h-100">
                 <router-link :to="`/productList/${item.id}`"
                  class="card-bg-cover"
