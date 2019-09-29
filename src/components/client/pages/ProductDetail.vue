@@ -82,7 +82,6 @@ export default {
       vm.$store.dispatch('updateLoading', true);
       this.$http.get(api).then((response) => {
         if (response.data.success) {
-          console.log('取得產品', response);
           vm.product = response.data.product;
           vm.$store.dispatch('updateLoading', false);
         }

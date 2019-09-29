@@ -177,10 +177,8 @@ export default {
         // 驗證成功
         if (valid) {
           this.$http.post(url, { data: order }).then((response) => {
-            console.log('建立訂單中.............');
             if (response.data.success) {
               // vm.status.addLoading = false;
-              console.log('訂單已建立', response);
               vm.$router.push(`/orderCompelete/${response.data.orderId}`);
             }
           });

@@ -178,9 +178,7 @@ export default {
       const vm = this;
       vm.isLoading = true;
       this.$http.get(api).then((response) => {
-        console.log(response.data);
         if (response.data.success) {
-          console.log('取得完畢');
           vm.products = response.data.products;
           vm.pagination = response.data.pagination;
           vm.isLoading = false;
@@ -206,21 +204,14 @@ export default {
         httpMethod = 'put';
       }
       this.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
-        console.log('建立商品中');
-        console.log(response.data);
-        console.log(vm.tempProduct);
         if (response.data.success) {
-          console.log('成功');
           $('#productModal').modal('hide');
-          console.log('重新取得資料中....');
           // 清空上傳的檔案
           $('#customFile').val('');
           vm.getProducts();
           // vm.products = response.data.products;
         } else {
-          console.log('失敗');
           $('#productModal').modal('hide');
-          console.log('重新取得資料中....');
           vm.getProducts();
         }
       });
@@ -234,20 +225,16 @@ export default {
       const vm = this;
       const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
       this.$http.delete(api).then((response) => {
-        console.log(response.data);
         if (response.data.success) {
-          console.log('刪除成功');
           $('#delProductModal').modal('hide');
           vm.getProducts();
         } else {
-          console.log('刪除失敗');
           $('#delProductModal').modal('hide');
           vm.getProducts();
         }
       });
     },
     uploadFile() {
-      console.log(this);
       const uploadedFile = this.$refs.files.files[0];
       const vm = this;
       const formData = new FormData();
@@ -262,7 +249,6 @@ export default {
         vm.status.fileUploading = false;
         if (response.data.success) {
           // vm.tempProduct.imageUrl = response.data.imageUrl;
-          console.log(response);
           vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl);
           vm.$store.dispatch('alertMsgModules/updateMessage', { message: '圖片上傳成功', status: 'success' });
         } else {

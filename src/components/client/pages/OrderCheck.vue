@@ -132,12 +132,10 @@ export default {
       vm.$store.dispatch('updateLoading', true);
       this.$http.post(url, { data: coupon }).then((response) => {
         if (response.data.success) {
-          console.log('套用優惠券', response);
           vm.$store.dispatch('alertMsgModules/updateMessage', { message: response.data.message, status: 'success' });
           // this.$bus.$emit('message:push', response.data.message, 'success');
           vm.getCart();
         } else {
-          console.log('套用失敗', response);
           vm.$store.dispatch('alertMsgModules/updateMessage', { message: response.data.message, status: 'danger' });
           // this.$bus.$emit('message:push', response.data.message, 'danger');
         }

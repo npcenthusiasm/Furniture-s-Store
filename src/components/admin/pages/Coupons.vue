@@ -123,9 +123,7 @@ export default {
       const vm = this;
       vm.isLoading = true;
       this.$http.get(api).then((response) => {
-        console.log(response.data);
         if (response.data.success) {
-          console.log('取得完畢');
           vm.coupons = response.data.coupons;
           vm.pagination = response.data.pagination;
           vm.isLoading = false;
@@ -166,21 +164,14 @@ export default {
         httpMethod = 'put';
       }
       this.$http[httpMethod](api, { data: vm.coupon }).then((response) => {
-        console.log('建立商品中');
-        console.log(response.data);
-        console.log(vm.coupon);
         if (response.data.success) {
-          console.log('成功');
           $('#couponModel').modal('hide');
-          console.log('重新取得資料中....');
           // 清空上傳的檔案
           // $('#customFile').val('');
           vm.getCoupons();
           // vm.coupons = response.data.coupons;
         } else {
-          console.log('失敗');
           $('#couponModel').modal('hide');
-          console.log('重新取得資料中....');
           vm.getCoupons();
         }
       });
@@ -194,13 +185,10 @@ export default {
       const vm = this;
       const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/admin/coupon/${vm.coupon.id}`;
       this.$http.delete(api).then((response) => {
-        console.log(response.data);
         if (response.data.success) {
-          console.log('刪除成功', response);
           $('#delCouponModal').modal('hide');
           vm.getCoupons();
         } else {
-          console.log('刪除失敗., response');
           $('#delCouponModal').modal('hide');
           vm.getCoupons();
         }

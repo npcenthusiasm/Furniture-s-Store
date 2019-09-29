@@ -14,13 +14,10 @@ export default {
       $('html,body').animate({ scrollTop: 0 }, 800);
     },
     scrollFade() {
-      // console.log( window.scrollY);
       if (window.scrollY > 300) {
         $('.top').fadeIn();
-        // this.scrolled = true;
       } else {
         $('.top').fadeOut();
-        // this.scrolled = false;
       }
     },
   },
@@ -33,6 +30,7 @@ export default {
 <style lang="scss" scoped>
 $hover:#7b776c;
 .top {
+  display: none;
   position: fixed;
   right: 10px;
   bottom: 40px;
@@ -51,6 +49,7 @@ a {
     width: 100%;
     text-align: center;
     line-height: 40px;
+    color: $hover;
     &:hover {
       color: white;
     }

@@ -159,4 +159,12 @@ export default {
 .box-shadow:hover {
   box-shadow: 0 3px 5px  rgba(0, 0, 0, 0.7);
 }
+@keyframes flicker {
+  0%{opacity: 1;}
+  50%{opacity: 0;}
+  100%{opacity: 1;}
+}
+.flicker {
+  animation: flicker 2s linear infinite;
+}
 </style>
