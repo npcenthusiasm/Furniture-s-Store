@@ -14,12 +14,17 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
               <router-link to="/productList" class="nav-link">商品列表
-              <span class="sr-only">(current)</span>
               </router-link>
             </li>
             <li class="nav-item ">
               <router-link to="/admin/products" class="nav-link">管理商品</router-link>
             </li>
+            <!-- <li class="nav-item ">
+              <a href="#hot" class="nav-link">熱門商品</a>
+            </li>
+            <li class="nav-item ">
+              <a href="#new" class="nav-link">最新消息</a>
+            </li> -->
           </ul>
 
           <ul class="list-inline mb-0">

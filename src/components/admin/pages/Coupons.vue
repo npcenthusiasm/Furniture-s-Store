@@ -71,6 +71,29 @@
         </div>
       </div>
     </div>
+    <!-- delete coupon modal -->
+    <div class="modal fade" id="delCouponModal" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content border-0">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="exampleModalLabel">
+              <span>刪除產品</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            是否刪除 <strong class="text-danger">{{ coupon.title }}</strong> 商品(刪除後將無法恢復)。
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-danger" @click="delCoupon">確認刪除</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -164,45 +187,22 @@ export default {
     },
     openDeleteModal(item) {
       const vm = this;
-      vm.tempProduct = item;
-      $('#delProductModal').modal('show');
+      vm.coupon = item;
+      $('#delCouponModal').modal('show');
     },
-    deleteProduct() {
+    delCoupon() {
       const vm = this;
-      const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
+      const api = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/admin/coupon/${vm.coupon.id}`;
       this.$http.delete(api).then((response) => {
         console.log(response.data);
         if (response.data.success) {
-          console.log('刪除成功');
-          $('#delProductModal').modal('hide');
+          console.log('刪除成功', response);
+          $('#delCouponModal').modal('hide');
           vm.getCoupons();
         } else {
-          console.log('刪除失敗');
-          $('#delProductModal').modal('hide');
+          console.log('刪除失敗., response');
+          $('#delCouponModal').modal('hide');
           vm.getCoupons();
-        }
-      });
-    },
-    uploadFile() {
-      console.log(this);
-      const uploadedFile = this.$refs.files.files[0];
-      const vm = this;
-      const formData = new FormData();
-      formData.append('file-to-upload', uploadedFile);
-      const url = `${process.env.API_PATH}/api/${process.env.CUSTOMPATH}/admin/upload`;
-      vm.status.fileUploading = true;
-      this.$http.post(url, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }).then((response) => {
-        vm.status.fileUploading = false;
-        if (response.data.success) {
-          // vm.tempProduct.imageUrl = response.data.imageUrl;
-          // console.log(vm.tempProduct);
-          vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl);
-        } else {
-          this.$bus.$emit('message:push', response.data.message, 'danger');
         }
       });
     },

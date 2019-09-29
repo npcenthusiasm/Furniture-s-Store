@@ -109,7 +109,7 @@ export default {
 };
 </script>
 
-<style lang="">
+<style lang="scss" scoped>
   .productImg img {
     margin-bottom: 30px;
   }

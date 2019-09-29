@@ -200,7 +200,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .order-img {
   background-position: center center;
   background-size: cover;

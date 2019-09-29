@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="container mb-4">
-      <h3>熱門商品</h3>
+      <h3 id="hot">熱門商品</h3>
       <div class="row mb-4 ">
         <div class="col-4">
           <div class="bg-cover product-item" style="background-image:url(https://images.unsplash.com/photo-1467043153537-a4fba2cd39ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=661&q=80)">
@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="container mb-4">
-      <h3>最新消息</h3>
+      <h3 id="new">最新消息</h3>
       <div class="row">
         <div class="col-md-6 mb-3 text-center d-flex align-items-center justify-content-center">
           <div style="">
@@ -92,7 +92,7 @@
   </div>
 </template>
 
-<style lang="">
+<style lang="scss" scoped>
   .carousel-item {
     height:400px;
   }

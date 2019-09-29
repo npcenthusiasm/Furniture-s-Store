@@ -262,10 +262,12 @@ export default {
         vm.status.fileUploading = false;
         if (response.data.success) {
           // vm.tempProduct.imageUrl = response.data.imageUrl;
-          // console.log(vm.tempProduct);
+          console.log(response);
           vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl);
+          vm.$store.dispatch('alertMsgModules/updateMessage', { message: '圖片上傳成功', status: 'success' });
         } else {
-          this.$bus.$emit('message:push', response.data.message, 'danger');
+          // this.$bus.$emit('message:push', response.data.message, 'danger');
+          vm.$store.dispatch('alertMsgModules/updateMessage', { message: response.data.message, status: 'danger' });
         }
       });
     },

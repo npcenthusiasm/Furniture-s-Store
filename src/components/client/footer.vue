@@ -70,6 +70,7 @@
             </a>
           </li>
         </ul>
+        <div class="text-center">資料、圖片來源皆來自網路</div>
         <div class="text-center">僅個人作品練習，無任何商業用途</div>
       </div>
     </footer>

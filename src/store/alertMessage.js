@@ -42,7 +42,7 @@ export default {
     UPDATE_MESSAGE(state, msg) {
       state.messages.push(msg);
     },
-    REMOVE_MESSAGE(state, num) {
+    REMOVE_MESSAGE(state) {
       console.log(state.messages);
       state.messages.splice(0, 1);
     },

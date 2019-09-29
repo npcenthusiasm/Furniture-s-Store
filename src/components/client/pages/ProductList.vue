@@ -67,9 +67,9 @@
             </div>
             <!--  -->
           </div>
+          <pagination :page="pagination" @switch="getProducts"></pagination>
         </div>
       </div>
-      <pagination :page="pagination" @switch="getProducts"></pagination>
     </div>
   </div>
 </template>
@@ -126,38 +126,37 @@ export default {
     this.getProducts();
   },
 };
-
 </script>
 
-<style lang="" scoped>
- .list-group .active {
-    background-color: rgba(128, 128, 128, 0.925);
-  }
-  .list-group-item {
-    cursor: pointer;
-    border: 0;
-  }
+<style lang="scss" scoped>
+.list-group .active {
+  background-color: rgba(128, 128, 128, 0.925);
+}
+.list-group-item {
+  cursor: pointer;
+  border: 0;
+}
 
-  .card-bg-cover {
-    background-size: cover;
-    background-position: center center;
-    height: 200px;
-  }
-  .card-bg-cover:hover {
-    background-size: cover;
-    background-position: center center;
-    height: 200px;
-    opacity: 0.8;
-  }
-  .jumbotron-bg-cover {
-    background-size: cover;
-    background-position: center center;
-    height: 400px;
-  }
-  .box-shadow {
-    box-shadow: 0 3px 5px  rgba(0, 0, 0, .16);
-  }
-  .box-shadow:hover {
-    box-shadow: 0 3px 5px  rgba(0, 0, 0, 0.7);
-  }
+.card-bg-cover {
+  background-size: cover;
+  background-position: center center;
+  height: 200px;
+}
+.card-bg-cover:hover {
+  background-size: cover;
+  background-position: center center;
+  height: 200px;
+  opacity: 0.8;
+}
+.jumbotron-bg-cover {
+  background-size: cover;
+  background-position: center center;
+  height: 400px;
+}
+.box-shadow {
+  box-shadow: 0 3px 5px  rgba(0, 0, 0, .16);
+}
+.box-shadow:hover {
+  box-shadow: 0 3px 5px  rgba(0, 0, 0, 0.7);
+}
 </style>

@@ -11,10 +11,12 @@
         </h6>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <router-link to="/admin/products" class="nav-link active">產品列表</router-link>
+            <router-link to="/admin/products" class="nav-link"
+            :class="{'active' : $route.name === 'Products' }">產品列表</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/admin/coupons" class="nav-link">優惠券</router-link>
+            <router-link to="/admin/coupons" class="nav-link"
+            :class="{'active' : $route.name === 'Coupons' }">優惠券</router-link>
           </li>
         </ul>
 
