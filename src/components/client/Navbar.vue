@@ -106,12 +106,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media (max-width: 768px) {
-  .navbar-brand {
-    text-align: center;
-    color: red;
-  }
-}
 .cart-img {
   background-position: center center;
   background-size: cover;
