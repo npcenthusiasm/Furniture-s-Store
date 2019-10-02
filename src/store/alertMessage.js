@@ -1,9 +1,9 @@
-import $ from 'jquery';
-
 export default {
   namespaced: true,
   state: {
     messages: [],
+    animationIn: false,
+    animationOut: false,
   },
   actions: {
     updateMessage(context, { message, status }) {
@@ -13,25 +13,23 @@ export default {
         status,
         timestamp,
       });
-      $('.message-alert').addClass('bounceInDown');
+      context.commit('ANIMATION_IN', true);
       context.dispatch('removeMessageWithTiming', timestamp);
     },
     removeMessage(context) {
       context.commit('REMOVE_MESSAGE');
-      $('.message-alert').removeClass('bounceInDown');
-      $('.message-alert').removeClass('bounceOutRight');
     },
     removeMessageWithTiming(context, timestamp) {
       const msg = [...context.state.messages];
       setTimeout(() => {
-        $('.message-alert').addClass('bounceOutRight');
+        context.commit('ANIMATION_IN', false);
+        context.commit('ANIMATION_OUT', true);
       }, 3000);
       setTimeout(() => {
         msg.forEach((item, i) => {
           if (item.timestamp === timestamp) {
             context.commit('REMOVE_MESSAGE', i);
-            $('.message-alert').removeClass('bounceInDown');
-            $('.message-alert').removeClass('bounceOutRight');
+            context.commit('ANIMATION_OUT', false);
           }
         });
       }, 5000);
@@ -44,8 +42,16 @@ export default {
     REMOVE_MESSAGE(state) {
       state.messages.splice(0, 1);
     },
+    ANIMATION_IN(state, status) {
+      state.animationIn = status;
+    },
+    ANIMATION_OUT(state, status) {
+      state.animationOut = status;
+    },
   },
   getters: {
     messages: state => state.messages,
+    animationIn: state => state.animationIn,
+    animationOut: state => state.animationOut,
   },
 };

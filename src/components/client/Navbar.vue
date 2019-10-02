@@ -16,9 +16,6 @@
               <router-link to="/productList" class="nav-link">商品列表
               </router-link>
             </li>
-            <li class="nav-item ">
-              <router-link to="/admin/products" class="nav-link">管理商品</router-link>
-            </li>
           </ul>
 
           <ul class="list-inline mb-0">
@@ -63,13 +60,15 @@
                     <p v-if="cartsCount === 0">是空的</p>
 
                   </div>
-                  <hr>
-                  <div class="d-flex mb-3">
-                    <div class="mr-auto">總金額</div>
-                    <div class="text-right">{{total | currency}}</div>
+                  <div v-if="cartsCount !== 0">
+                    <hr>
+                    <div class="d-flex mb-3">
+                      <div class="mr-auto">總金額</div>
+                      <div class="text-right">{{total | currency}}</div>
+                    </div>
+                    <router-link class="btn btn-outline-primary btn-block"
+                    to="/orderCheck">結帳去</router-link>
                   </div>
-                  <router-link class="btn btn-outline-primary btn-block"
-                  to="/orderCheck">結帳去</router-link>
                 </div>
               </div>
             </li>

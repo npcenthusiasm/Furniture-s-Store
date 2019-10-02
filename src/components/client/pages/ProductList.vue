@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="jumbotron jumbotron-fluid jumbotron-bg-cover d-flex" style="background-image:url(https://images.unsplash.com/photo-1558882224-dda166733046?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80)">
+    <div class="jumbotron jumbotron-fluid jumbotron-bg-cover d-flex banner-img">
       <div class="container" >
         <h1 class="display-4 text-white shadow">即使風格變化，一樣井井有條</h1>
         <p class="lead"></p>
@@ -31,11 +31,11 @@
           <div class="row">
             <!-- 2 -->
             <div class="col-md-6 col-lg-4 mb-3" v-for="item in filterCategory" :key="item.id">
-              <div class="card box-shadow h-100">
-                <router-link :to="`/productList/${item.id}`"
-                 class="card-bg-cover"
+              <div class="card box-shadow h-100"
+              @click.stop="$router.push(`/productList/${item.id}`)">
+                <div class="card-bg-cover"
                 :style="{backgroundImage: `url(${item.imageUrl})`}">
-                </router-link>
+                </div>
                 <div class="card-body">
                   <h5 class="card-title">{{item.title}}
                     <span v-if="item.category === '燈具'" class="text-danger h5 flicker">NEW</span>
@@ -55,7 +55,8 @@
                   </div>
                   <div>
                     <a href="#" class="btn btn-outline-primary rounded-circle"
-                    @click.prevent="addToCart(item.id)">
+                    @click.stop.prevent="addToCart(item.id)"
+                    :class="{'disabled': singleLoading}">
                       <i class="fa fa-shopping-bag"
                       v-if="!singleLoading  || productId !== item.id"></i>
                       <i class="fas fa-spinner fa-spin"
@@ -129,6 +130,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.banner-img {
+  background-image: url('../../../assets/images/banner.jpg')
+}
 .list-group .active {
   background-color: rgba(128, 128, 128, 0.925);
 }
@@ -136,7 +140,9 @@ export default {
   cursor: pointer;
   border: 0;
 }
-
+.card {
+  cursor: pointer;
+}
 .card-bg-cover {
   background-size: cover;
   background-position: center center;

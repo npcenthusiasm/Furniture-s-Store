@@ -7,16 +7,26 @@
           <div class="col-6 col-sm-4">
             <ul class="list-group">
               <li class="list-group-item h5" id="about">ABOUT</li>
-              <li class="list-group-item"><a href="#">最新公告</a></li>
-              <li class="list-group-item"><a href="#">關於我們</a></li>
-              <li class="list-group-item"><a href="#">門市資訊</a></li>
+              <li class="list-group-item">
+                <router-link to="/productList">最新公告</router-link>
+              </li>
+              <li class="list-group-item">
+                <router-link to="/productList">關於我們</router-link>
+              </li>
+              <li class="list-group-item">
+                <router-link to="/productList">門市資訊</router-link>
+              </li>
             </ul>
           </div>
           <div class="col-6 col-sm-4">
             <ul class="list-group">
               <li class="list-group-item h5">MEMBERS</li>
-              <li class="list-group-item"><a href="#">加入會員</a></li>
-              <li class="list-group-item"><a href="#">會員優惠</a></li>
+              <li class="list-group-item">
+                <router-link to="/productList">加入會員</router-link>
+              </li>
+              <li class="list-group-item">
+                <router-link to="/productList">會員優惠</router-link>
+              </li>
             </ul>
           </div>
           <div class="col-6 col-sm-4">

@@ -20,9 +20,9 @@
 
       <div class="row">
         <div class="col-md-7 productImg order-1 order-md-0">
-          <img :src="product.imageUrl" class="img-fluid" alt="">
-          <img src="https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" class="img-fluid" alt="">
-          <img src="https://images.unsplash.com/photo-1548728560-29a15f46fb24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" class="img-fluid" alt="">
+          <img class="img-fluid" :src="product.imageUrl" alt="">
+          <img class="img-fluid" src="../../../assets/images/product-2.jpg" alt="">
+          <img class="img-fluid" src="../../../assets/images/product-1.jpg" alt="">
         </div>
         <div class="col-md-5 order-0  order-md-1">
           <div class="sticky-top" style="top:10px">
@@ -43,7 +43,8 @@
                 <button type="button" class="btn btn-white" @click="plusNum">+</button>
               </div>
               <a href="#" class="btn btn-outline-secondary rounded-0 w-100"
-              @click.prevent="addToCart(productId, num)">
+              @click.prevent="addToCart(productId, num)"
+              :class="{'disabled': singleLoading}">
               <span v-if="!singleLoading">加入購物袋</span>
               <i class="fas fa-spinner fa-spin" v-if="singleLoading"></i></a>
             </div>

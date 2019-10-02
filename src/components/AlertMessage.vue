@@ -1,5 +1,6 @@
 <template>
-  <div class="message-alert animated">
+  <div class="message-alert animated"
+  :class="{'bounceInDown': animationIn, 'bounceOutRight':animationOut }">
     <div class="alert alert-dismissible"
       :class="'alert-' + item.status"
       v-for="(item, i) in messages" :key="i">
@@ -24,12 +25,9 @@ export default {
   },
   methods: {
     ...mapActions('alertMsgModules', ['removeMessage']),
-    updateMessage(message, status) {
-      this.$store.dispatch('alertMsgModules/updateMessage', { message, status });
-    },
   },
   computed: {
-    ...mapGetters('alertMsgModules', ['messages']),
+    ...mapGetters('alertMsgModules', ['messages', 'animationIn', 'animationOut']),
   },
 };
 </script>

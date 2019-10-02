@@ -190,10 +190,13 @@ export default {
     },
   },
   computed: {
-    ...mapGetters('cartsModules', ['carts', 'total', 'final_total']),
+    ...mapGetters('cartsModules', ['carts', 'total', 'final_total', 'cartsCount']),
   },
   created() {
     this.getCart();
+    if (this.cartsCount === 0) {
+      this.$router.back();
+    }
   },
 };
 </script>
